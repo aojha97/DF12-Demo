@@ -1,0 +1,21 @@
+<%= form_for :facility, :url => edit_facility_path do |f| %>
+  <div class="field">
+    <%= f.label :Name %><br />
+    <%= f.text_field :Name %>
+  </div>
+  <div class="field">
+    <%= f.label :Description__c %><br />
+    <%= f.text_area :Description__c %>
+  </div>
+  <div class="field">
+    <%= f.label :Hours__c %><br />
+    <%= f.text_field :Hours__c %>
+  </div>
+  <div class="field">
+    <%= f.label :Location__c %><br />
+    <%= f.text_field :Location__c %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
