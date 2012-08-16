@@ -1,0 +1,32 @@
+<h1>Listing facilities</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description  c</th>
+    <th>Hours  c</th>
+    <th>Long  c</th>
+    <th>Lat  c</th>
+    <th>Location  c</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @facilities.each do |facility| %>
+  <tr>
+    <td><%= facility.Name %></td>
+    <td><%= facility.Description__c %></td>
+    <td><%= facility.Hours__c %></td>
+    <td><%= facility.Long__c %></td>
+    <td><%= facility.Lat__c %></td>
+    <td><%= facility.Location__c %></td>
+    <td><%= link_to 'Show', facility_path(facility) %></td>
+    <td><%= link_to 'Edit', edit_facility_path(facility) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Facility', new_facility_path %>

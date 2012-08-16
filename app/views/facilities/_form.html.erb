@@ -1,0 +1,41 @@
+<%= form_for :facility, :url => create_path do |f| %>
+  <% if @facility.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@facility.errors.count, "error") %> prohibited this facility from being saved:</h2>
+
+      <ul>
+      <% @facility.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description__c %><br />
+    <%= f.text_area :description__c %>
+  </div>
+  <div class="field">
+    <%= f.label :hours__c %><br />
+    <%= f.text_field :hours__c %>
+  </div>
+  <div class="field">
+    <%= f.label :long__c %><br />
+    <%= f.text_field :long__c %>
+  </div>
+  <div class="field">
+    <%= f.label :lat__c %><br />
+    <%= f.text_field :lat__c %>
+  </div>
+  <div class="field">
+    <%= f.label :location__c %><br />
+    <%= f.text_field :location__c %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
