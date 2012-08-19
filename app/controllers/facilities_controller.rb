@@ -3,36 +3,18 @@ class FacilitiesController < ApplicationController
   include Databasedotcom::Rails::Controller
 
   # GET /facilities
-  # GET /facilities.json
   def index
     @facilities = Facility__c.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @facilities }
-    end
   end
 
   # GET /facilities/1
-  # GET /facilities/1.json
   def show
     @facility = Facility__c.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @facility }
-    end
   end
 
   # GET /facilities/new
-  # GET /facilities/new.json
   def new
-    @facility = Facility.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @facility }
-    end
+    @facility = Facility__c.new
   end
 
   # GET /facilities/1/edit
@@ -41,46 +23,28 @@ class FacilitiesController < ApplicationController
   end
 
   # POST /facilities
-  # POST /facilities.json
   def create
-    @facility = Facility.new(params[:facility])
+    @facility = Facility__c.new(params[:facility])
+    @facility.OwnerId = '005E0000001T9Nv'
 
-    respond_to do |format|
-      if @facility.save
-        format.html { redirect_to @facility, notice: 'Facility was successfully created.' }
-        format.json { render json: @facility, status: :created, location: @facility }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @facility.errors, status: :unprocessable_entity }
-      end
+    if @facility.save
+      redirect_to facility_path(@facility), notice: 'Facility was successfully created.'
+    else
+      format.html { render action: "new" }
     end
   end
 
   # PUT /facilities/1
-  # PUT /facilities/1.json
   def update
-    @facility = Facility.find(params[:id])
+    @facility = Facility__c.find(params[:id])
 
-    respond_to do |format|
-      if @facility.update_attributes(params[:facility])
-        format.html { redirect_to @facility, notice: 'Facility was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @facility.errors, status: :unprocessable_entity }
-      end
+    begin
+      @facility.update_attributes Facility__c.coerce_params(params[:facility])
+    rescue Databasedotcom::SalesForceError => e
+      puts 'Issue updating with record'
     end
+
+    redirect_to facility_path(@facility), notice: 'Facility was successfully updated.' 
   end
 
-  # DELETE /facilities/1
-  # DELETE /facilities/1.json
-  def destroy
-    @facility = Facility.find(params[:id])
-    @facility.destroy
-
-    respond_to do |format|
-      format.html { redirect_to facilities_url }
-      format.json { head :no_content }
-    end
-  end
 end
