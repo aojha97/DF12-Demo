@@ -1,35 +1,72 @@
-<p id="notice"><%= notice %></p>
+<style type="text/css">
 
-<p>
-  <b>Name:</b>
-  <%= @facility.Name %>
-</p>
+.page {
+    height: 100%;
+}
 
-<p>
-  <b>Description  c:</b>
-  <%= @facility.Description__c %>
-</p>
+#map_content {
+    height: 75%;
+    overflow: hidden;
+}
 
-<p>
-  <b>Hours  c:</b>
-  <%= @facility.Hours__c %>
-</p>
+#map_canvas {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    text-shadow: none;
+}
+</style>
 
-<p>
-  <b>Long  c:</b>
-  <%= @facility.Long__c %>
-</p>
+<script type="text/javascript">
+var map;
 
-<p>
-  <b>Lat  c:</b>
-  <%= @facility.Lat__c %>
-</p>
+function initialize() {
+  initMap(-40.06173, 174.97633, 11, true);
+  var latLong = new google.maps.LatLng(-40.062, 174.976);
+  var marker = createMapMarker(latLong, "Pauri Domain Rd, Kaitoke 4572, New Zealand")
+  marker.setAnimation(google.maps.Animation.DROP)
+}
 
-<p>
-  <b>Location  c:</b>
-  <%= @facility.Location__c %>
-</p>
+function createMapMarker(latLong) {
+  return new google.maps.Marker({position: latLong, map: map});
+}
+
+function initMap(lat, lng, mapZoom, showOverviewControl) {
+  var mapLatlng = new google.maps.LatLng(lat, lng);
+  var myOptions = {
+      zoom: mapZoom,
+      center: mapLatlng,
+      overviewMapControl: showOverviewControl,
+      zoomControl: true,
+      zoomControlOptions: {
+          style: google.maps.ZoomControlStyle.SMALL,
+          position: google.maps.ControlPosition.LEFT_TOP
+
+      },
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+}
+
+$('.page').live('pageshow', function(event, ui){
+  initialize();
+});
+</script>
+
+<div data-role="header">
+  <h1><%= @facility.Name %></h1>
+  <%= link_to 'Back', facilities_path, { "data-icon"  => "back", "class" => "ui-btn-left" } %> 
+  <%= link_to 'Favorite', facilities_path, { "data-icon"  => "star", "class" => "ui-btn-right"}  %>
+</div>
+
+<div data-role="content" id="map_content">
 
 
-<%= link_to 'Edit', edit_facility_path(@facility) %> |
-<%= link_to 'Back', facilities_path %>
+  <h3><%= @facility.Name %> - <%= @facility.Location__c %></h3>
+  <p><%= @facility.Hours__c %></p>
+  <p><%= @facility.Description__c %></p>
+
+    <div id="map_content">
+        <div id="map_canvas"></div>
+    </div>
+</div>
