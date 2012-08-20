@@ -47,4 +47,14 @@ class FacilitiesController < ApplicationController
     redirect_to facility_path(@facility), notice: 'Facility was successfully updated.' 
   end
 
+  # GET /favorites
+  def favorites
+    @facilities = Facility__c.all
+  end
+
+  # GET /favorite
+  def favorite
+    @facility = Facility__c.find(params[:id])
+  end
+
 end

@@ -1,5 +1,8 @@
 Df12Chowfinder::Application.routes.draw do
   resources :facilities
+  match 'favorites' => 'facilities#favorites'
+  match 'favorite/:id' => 'facilities#favorite'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
